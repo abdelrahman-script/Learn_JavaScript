@@ -896,3 +896,238 @@ console.log(removeChars.filter(ele => ele != "@").reduce((acc, current) => acc +
   - Doesnt Return Anything [Undefined]
   - Break Will Not Break The Loop
 */
+
+//                <-- Object --> 
+
+/*
+  Object
+  - Intro and what Is Object
+  - The Window Object
+  - Accessing Object
+*/
+
+var user = {
+  // Properties
+  theName: "Osama",
+  theAge: 38,
+  // Method
+  sayHello: function () {
+    return `Hello`;
+  },
+};
+
+console.log(user.theName) // Osama
+console.log(user.theAge) // 38
+console.log(user.sayHello()) // Hello
+
+/*
+  Object
+  - Dig Deeper
+  - Dot Notation vs Bracket Notation
+  - Dynamic Property Name
+*/
+
+var myVar = "country";
+
+var user = {
+  theName: "Osama",
+  "last name": "Mohamed",
+  country: "Egypt",
+};
+
+console.log(user.theName); // Osama
+console.log(user.country); // Egypt
+console.log(user.myVar); // undefined
+console.log(user[myVar]); // Egypt
+// console.log(user."last name"); Error
+console.log(user["last name"]); // Mohamed
+
+/*
+  Object
+  - Nested Object And Training
+*/
+
+var user = {
+  name: "Osama",
+  age: 38,
+  skills: ["HTML", "CSS", "JS"],
+  available: false,
+  addresses: {
+    ksa: "Riyadh",
+    egypt: {
+      one: "Cairo",
+      two: "Giza",
+    },
+  },
+  checkAv: function () {
+    if (user.available === true) {
+      return `Free For Work`;
+    } else {
+      return `Not Free`;
+    }
+  },
+};
+
+console.log(user.name) // Osama
+console.log(user.age) // 38
+console.log(user.skills) // ['HTML', 'CSS', 'JS']
+console.log(user.skills.join(" | ")) // HTML | CSS | JS
+console.log(user.skills[[2]]) // JS
+console.log(user.addresses.ksa) // Riyadh
+console.log(user.addresses.egypt.one) // Cairo
+console.log(user["addresses"].egypt.one) // Cairo
+console.log(user["addresses"]["egypt"].one) // Cairo
+console.log(user["addresses"]["egypt"]["one"]) // Cairo
+console.log(user.checkAv()) // Not Free
+
+/*
+  Object
+  - Create With New Keyword new Object();
+*/
+
+var user = {
+  age: 20,
+};
+
+// Create With New Keyword new Object();
+var user = new Object({
+  age: 20,
+}
+);
+
+console.log(user) // {age: 20}
+user.age = 38;
+user.Name = "Osama"
+user["country"] = "Egypt"
+user.sayHello = function () {
+  return `Hello`;
+}
+console.log(user) // {age: 38, Name: 'Osama', country: 'Egypt', sayHello: ƒ}
+
+/*
+  Function this Keyword
+  - this Introduction
+  - this Inside Object Method
+  --- When a function is called as a method of an object,
+  --- its this is set to the object the method is called on.
+  - Global Object
+  - Test Variables With Window And This
+  - Global Context
+  - Function Context
+
+  Search
+  - Strict Mode
+*/
+
+console.log(this); // window
+console.log(this === window); // true
+
+myVar = 100;
+
+console.log(window.myVar); // 100
+console.log(this.myVar); // 100
+
+function sayHello() {
+  console.log(this);
+  return this;
+}
+sayHello(); // window
+
+console.log(sayHello() === window); // true
+
+var user = {
+  age: 38,
+  ageInDays: function () {
+    console.log(this);
+    return this.age * 365;
+  },
+};
+
+console.log(user.age); // 38
+console.log(user.ageInDays()); // 13870
+
+/*
+  Object
+  - Create Object With create Method
+*/
+
+var user = {
+  age: 40,
+  doubleAge: function () {
+    return user.age * 2;
+  }
+}
+
+console.log(user) // { age: 40, doubleAge: ƒ }
+console.log(user.age) // 40
+console.log(user.doubleAge()) // 80
+
+var obj = Object.create({})
+console.log(obj) // {}
+
+obj.a = 100;
+console.log(obj) // { a: 100 }
+
+var copyObj = Object.create(user);
+
+console.log(copyObj) // { }
+console.log(copyObj.age) // 40
+console.log(copyObj.doubleAge()) // 80
+
+copyObj.age = 30
+
+console.log(copyObj) // { age: 30 }
+console.log(copyObj.age) // 30
+console.log(copyObj.doubleAge()) // 80 => 40 * 2
+console.log(user.age) // 40
+
+var user = {
+  age: 40,
+  doubleAge: function () {
+    return this.age * 2;
+  }
+}
+
+var copyObj = Object.create(user);
+
+copyObj.age = 30
+
+console.log(copyObj) // { age: 30 }
+console.log(copyObj.age) // 30
+console.log(copyObj.doubleAge()) // 60 => 30 * 2
+console.log(user.age) // 40
+
+/*
+  Object
+  - Create Object With Assign Method
+*/
+
+let obj1 = {
+  prop1: 1,
+  meth1: function () {
+    return this.prop1;
+  },
+};
+
+let obj2 = {
+  prop2: 2,
+  meth2: function () {
+    return this.prop2;
+  },
+};
+
+let targetObject = {
+  prop1: 100,
+  prop3: 3,
+};
+
+let finalObject = Object.assign(targetObject, obj1, obj2);
+
+finalObject.prop1 = 200;
+finalObject.prop4 = 4;
+
+console.log(finalObject); // {prop1: 200, prop3: 3, prop2: 2, meth1: ƒ, meth2: ƒ, …}
+
+let newObject = Object.assign({}, obj1, { prop5: 5, prop6: 6 });
+
+console.log(newObject); // {prop1: 1, prop5: 5, prop6: 6, meth1: ƒ}
