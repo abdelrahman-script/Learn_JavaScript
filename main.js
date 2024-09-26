@@ -1131,3 +1131,180 @@ console.log(finalObject); // {prop1: 200, prop3: 3, prop2: 2, meth1: ƒ, meth2: 
 let newObject = Object.assign({}, obj1, { prop5: 5, prop6: 6 });
 
 console.log(newObject); // {prop1: 1, prop5: 5, prop6: 6, meth1: ƒ}
+
+// <--- OOP --->
+
+/*
+  Constructor Function
+*/
+
+function User(id, username, salary) {
+  this.i = id;
+  this.u = username;
+  this.s = salary + 1000;
+}
+
+var userOne = new User(100, "Elzero", 5000);
+var userTwo = new User(101, "Hassan", 6000);
+var userThree = new User(102, "Sayed", 7000);
+
+console.log(userOne.i); // 100
+console.log(userOne.u); // Elzero
+console.log(userOne.s); // 6000
+
+console.log(userTwo.i); // 101
+console.log(userTwo.u); // Hassan
+console.log(userTwo.s); // 7000
+
+console.log(userThree.i); // 102
+console.log(userThree.u); // Sayed
+console.log(userThree.s); // 8000
+
+// const userOne = {
+//   id: 100,
+//   username: "Elzero",
+//   salary: 5000,
+// };
+
+// const userTwo = {
+//   id: 101,
+//   username: "Hassan",
+//   salary: 6000,
+// };
+
+// const userThree = {
+//   id: 102,
+//   username: "Sayed",
+//   salary: 7000,
+// };
+
+
+/*
+  Constructor Function
+  - New Syntax
+*/
+
+class Users {
+  constructor(id, username, salary) {
+    this.i = id;
+    this.u = username;
+    this.s = salary + 1000;
+  }
+}
+
+var userOne = new Users(100, "Elzero", 5000);
+
+console.log(userOne.i); // 100
+console.log(userOne.u); // Elzero
+console.log(userOne.s); // 6000
+
+console.log(userOne instanceof Users); // true
+console.log(userOne.constructor === Users); // true
+
+
+/*
+  Constructor Function
+  - Deal With Properties And Methods
+*/
+
+class Userss {
+  constructor(id, username, salary) {
+    // Properties
+    this.i = id;
+    this.u = username || "Unknown";
+    this.s = salary < 6000 ? salary + 500 : salary;
+    this.msg = function () {
+      return `Hello ${this.u} Your Salary Is ${this.s}`;
+    };
+  }
+  // Methods
+  writeMsg() {
+    return `Hello ${this.u} Your Salary Is ${this.s}`;
+  }
+}
+
+var userOne = new Userss(100, "Elzero", 5000);
+var userTwo = new Userss(101, "", 6000);
+
+console.log(userOne.u); // Elzero
+console.log(userOne.s); // 5500
+console.log(userOne.msg()); // Hello Elzero Your Salary Is 5500
+console.log(userOne.writeMsg()); // Hello Elzero Your Salary Is 5500
+
+console.log(userTwo.u); // Unknown
+console.log(userTwo.s); // 6000
+console.log(userTwo.msg); // Native Code
+console.log(userTwo.writeMsg); // Native Code
+
+
+/*
+  Constructor Function
+  - Update Properties
+  - Built In Constructors
+*/
+
+class Usersss {
+  constructor(id, username, salary) {
+    this.i = id;
+    this.u = username;
+    this.s = salary;
+  }
+  updateName(newName) {
+    this.u = newName;
+  }
+}
+
+var userOne = new Usersss(100, "Elzero", 5000);
+
+console.log(userOne.u);
+userOne.updateName("Osama"); // Elzero
+console.log(userOne.u); // Osama
+
+var strOne = "Elzero";
+var strTwo = new String("Elzero");
+
+console.log(typeof strOne); // string
+console.log(typeof strTwo); // object
+
+console.log(strOne instanceof String); // false
+console.log(strTwo instanceof String); // true
+
+console.log(strOne.constructor === String); // true
+console.log(strTwo.constructor === String); // true
+
+
+/*
+  Class
+  - Static Properties And Methods -> الكلاس بيكون شايفها لكن الاوبجيكت لا
+*/
+
+class Userssss {
+  // Static Property
+  static count = 0;
+
+  constructor(id, username, salary) {
+    this.i = id;
+    this.u = username;
+    this.s = salary;
+    Userssss.count++; // بتذود واحد كل ما بعمل اوبجيكت
+  }
+
+  // Static Methods
+  static sayHello() {
+    return `Hello From Class`;
+  }
+  static countMembers() {
+    return `${this.count} Members Created`;
+  }
+}
+
+var userOne = new Userssss(100, "Elzero", 5000);
+var userTwo = new Userssss(101, "Ahmed", 5000);
+var userThree = new Userssss(102, "Sayed", 5000);
+
+console.log(userOne.u); // Elzero
+console.log(userTwo.u); // Ahmed
+console.log(userOne.count); // undefined
+console.log(Userssss.count); // 3
+console.log(Userssss.sayHello()); // Hello From Class
+console.log(Userssss.countMembers()); // 3 Members Created
