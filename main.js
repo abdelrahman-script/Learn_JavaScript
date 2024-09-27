@@ -1308,3 +1308,232 @@ console.log(userOne.count); // undefined
 console.log(Userssss.count); // 3
 console.log(Userssss.sayHello()); // Hello From Class
 console.log(Userssss.countMembers()); // 3 Members Created
+
+/*
+  Class
+  - Inheritance
+*/
+
+// Parent Class
+class Usersssss {
+  constructor(id, username) {
+    this.i = id;
+    this.u = username;
+  }
+  sayHello() {
+    return `Hello ${this.u}`;
+  }
+}
+
+// Derived Class
+class Admin extends Usersssss {
+  constructor(id, username, permissions) {
+    super(id, username); // الخواص اللي هيورثها من الاب
+    this.p = permissions;
+  }
+}
+
+class Superman extends Admin {
+  constructor(id, username, permissions, ability) {
+    super(id, username, permissions);
+    this.a = ability;
+  }
+}
+
+var userOne = new Usersssss(100, "Elzero");
+var adminOne = new Admin(110, "Mahmoud", 1);
+
+console.log(userOne.u); // Elzero
+console.log(userOne.sayHello()); // Hello Elzero
+console.log("####"); // ####
+console.log(adminOne.i); // 110
+console.log(adminOne.u); // Mahmoud
+console.log(adminOne.p); // 1
+console.log(adminOne.sayHello()); // Hello Mahmoud
+
+/*
+  Encapsulation
+  - Class Fields Are Public By Default
+  - Guards The Data Against Illegal Access.
+  - Helps To Achieve The Target Without Revealing Its Complex Details.
+  - Will Reduce Human Errors.
+  - Make The App More Flexible And Manageable.
+  - Simplifies The App.
+*/
+
+class Userssssss {
+  // Private Property
+  #e;
+  constructor(id, username, eSalary) {
+    this.i = id;
+    this.u = username;
+    this.#e = eSalary; // Private
+  }
+  getSalary() {
+    return parseInt(this.#e);
+  }
+}
+
+var userOne = new Userssssss(100, "Elzero", "5000 Gneh");
+
+console.log(userOne.u); // Elzero
+// console.log(userOne.#e) // Error
+// console.log(userOne.e) // undefined
+console.log(userOne.getSalary() * 0.3); // 1500
+
+/*
+  Prototype
+  - Introduction
+  - Prototypes are the mechanism by which JavaScript objects
+    inherit features from one another.
+*/
+
+class Usersssssss {
+  constructor(id, username) {
+    this.i = id;
+    this.u = username;
+  }
+  sayHello() {
+    return `Hello ${this.u}`;
+  }
+}
+
+var userOne = new User(100, "Elzero");
+console.log(userOne.u); // Elzero
+console.log(Usersssssss.prototype); // { sayHello: ƒ }
+var strOne = "Elzero";
+console.log(String.prototype); // String { '', anchor: ƒ, at: ƒ, big: ƒ, blink: ƒ, … }
+
+/*
+  Prototype
+  - Add To Prototype Chain
+  - Extend Built In Constructors Features
+*/
+
+class Userssssssss {
+  constructor(id, username) {
+    this.i = id;
+    this.u = username;
+  }
+  sayHello() {
+    return `Hello ${this.u}`;
+  }
+}
+
+var userOne = new Userssssssss(100, "Elzero");
+console.log(userOne.u); // Elzero
+console.log(Userssssssss.prototype); // { sayHello: ƒ }
+console.log(userOne); // Userssssssss { i: 100, u: 'Elzero' }
+Userssssssss.prototype.sayWelcome = function () {
+  return `Welcome ${this.u}`;
+};
+
+Object.prototype.love = "Elzero Web School";
+console.log(Object.prototype.love) // Elzero Web School
+String.prototype.addDotBeforeAndAfter = function (val) {
+  return `.${this}.`;
+};
+
+var myString = "Elzero";
+console.log(myString.addDotBeforeAndAfter()) // .Elzero.
+
+/*
+  Object Meta Data And Descriptor
+  - writable --> التعديل
+  - enumerable --> مش بقدر اوصلها و انا بعمل لوب لكن مش بحذفها من الاوبجيكت
+  - configurable [Cannot Delete Or Reconfigure] --> التعديل و الحذف 
+*/
+
+// (false) الحاجات اللي مش بكتبها بيعتبرها 
+
+const myObject = {
+  a: 1,
+  b: 2,
+};
+
+Object.defineProperty(myObject, "c", {
+  writable: false,
+  enumerable: true,
+  configurable: false,
+  value: 3,
+});
+
+// Object.defineProperty(myObject, "c", {
+//   writable: false,
+//   enumerable: true,
+//   configurable: true, <= Cannot redefine property
+//   value: 3,
+// });
+
+
+myObject.c = 100;
+
+console.log(delete myObject.c); // false --> بشوف لو عمليه الحذف تمت بنجاح ولا لا
+
+for (let prop in myObject) { // --> لو عاوز اطبع محتوي الاوبجيكت
+  console.log(prop, myObject[prop]);
+}
+// a 1
+// b 2
+// c 3
+// love Elzero Web School
+
+console.log(myObject); // { a: 1, b: 2, c: 3 }
+
+/*
+  Object Meta Data And Descriptor
+  - Define Multiple Properties
+  - Check Descriptors
+*/
+
+const myObjectt = {
+  a: 1,
+  b: 2,
+};
+
+Object.defineProperties(myObjectt, {
+  c: {
+    configurable: true,
+    value: 3,
+  },
+  d: {
+    configurable: true,
+    value: 4,
+  },
+  e: {
+    configurable: true,
+    value: 5,
+  },
+});
+
+console.log(myObjectt);
+/*
+{a: 1, b: 2, c: 3, d: 4, e: 5}
+a : 1
+b : 2
+c : 3
+d : 4
+e : 5
+[[Prototype]] : Object
+*/
+
+console.log(Object.getOwnPropertyDescriptor(myObjectt, "d"));
+/*
+{value: 4, writable: false, enumerable: false, configurable: true}
+configurable : true
+enumerable : false
+value : 4
+writable : false
+[[Prototype]] : Object
+*/
+
+console.log(Object.getOwnPropertyDescriptors(myObjectt));
+/*
+{ a: {… }, b: {… }, c: {… }, d: {… }, e: {… } }
+a : { value: 1, writable: true, enumerable: true, configurable: true }
+b : { value: 2, writable: true, enumerable: true, configurable: true }
+c : { value: 3, writable: false, enumerable: false, configurable: true }
+d : { value: 4, writable: false, enumerable: false, configurable: true }
+e : { value: 5, writable: false, enumerable: false, configurable: true }
+[[Prototype]] : Object
+*/

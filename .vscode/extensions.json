@@ -2,6 +2,7 @@
   "recommendations": [
     "esbenp.prettier-vscode",
     "xabikos.javascriptsnippets",
-    "steoates.autoimport"
+    "steoates.autoimport",
+    "formulahendry.code-runner"
   ]
 }
